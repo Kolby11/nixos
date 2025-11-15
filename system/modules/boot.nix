@@ -33,7 +33,7 @@
       enable = true;
     };
     tmp.cleanOnBoot = true;
-    supportedFilesystems = [ "ntfs" ];
+    supportedFilesystems = [ "ext4" "ntfs" ];
   };
 
 
