@@ -2,7 +2,7 @@
 
 {
   imports = [
-    ./config.nix
+    # ./config.nix
     ./git.nix
     ./packages.nix
     ./stylix.nix

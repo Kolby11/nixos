@@ -1,5 +1,4 @@
-{ config, pkgs, ... }:
-
+{ config, pkgs, inputs, ... }:
 {
   environment.systemPackages = with pkgs; [
     waybar
@@ -8,5 +7,17 @@
     wlogout
     wl-clipboard
     lxqt.pcmanfm-qt
+    nwg-displays
+    hyprshot
+    hyprpaper
+    vscode
+    libnotify
+
+    # Terminal
+    kitty
+    starship
+
+    inputs.caelestia-shell.packages.${pkgs.system}.default
+    inputs.caelestia-cli.packages.${pkgs.system}.default
   ];
 }

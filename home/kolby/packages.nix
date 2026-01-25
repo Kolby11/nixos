@@ -2,6 +2,8 @@
 
 {
   home.packages = with pkgs; [
+    (pkgs.callPackage ./wallrizz.nix {})
+    fzf
     fastfetch
     # Dev
     cmake
@@ -17,7 +19,8 @@
     rustup
     pkgsCross.mingwW64.stdenv.cc 
     pkgsCross.mingwW64.windows.pthreads
-    
+    matugen
+    firefox
     # Work
     teams-for-linux
 

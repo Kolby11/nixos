@@ -2,9 +2,9 @@
 
 {
   imports = [
-    ./i3
+    # ./i3
     ./hyprland
-    ./gnome
+    # ./gnome
   ];
 }
 

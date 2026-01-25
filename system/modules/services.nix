@@ -12,7 +12,7 @@
         theme = "catppuccin-mocha";
         package = pkgs.kdePackages.sddm;
       };
-      defaultSession = "none+i3";
+      defaultSession = "hyprland";
     };
 
     xserver = {

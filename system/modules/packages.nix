@@ -3,6 +3,7 @@
 
 {
   environment.systemPackages = with pkgs; [
+    cmake
     home-manager
     btop
     git
@@ -13,6 +14,7 @@
     openssl.dev
     pkg-config
     wget
+    stow
   ];
 }
 

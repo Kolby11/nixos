@@ -20,24 +20,21 @@
         gfxmodeEfi = "1920x1080";
         gfxpayloadBios = "keep";
         extraEntries = "
-            menuentry 'Reboot' {
-              reboot
-            }
-            menuentry 'Poweroff' {
-              halt
-            }
+          menuentry 'Reboot' {
+            reboot
+          }
+          menuentry 'Poweroff' {
+            halt
+          }
         ";
       };
     };
+
     plymouth = {
       enable = true;
     };
+
     tmp.cleanOnBoot = true;
     supportedFilesystems = [ "ext4" "ntfs" ];
   };
-
-
-  environment.systemPackages = with pkgs; [
-    # sbctl is optional with plain systemd-boot, remove if not using Secure Boot
-  ];
 }

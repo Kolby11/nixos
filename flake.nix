@@ -13,6 +13,15 @@
         url = "github:nix-community/stylix/release-25.05";
         inputs.nixpkgs.follows = "nixpkgs";
       };
+
+      caelestia-shell = {
+        url = "github:caelestia-dots/shell";
+        inputs.nixpkgs.follows = "nixpkgs-unstable";
+      };
+      caelestia-cli = {
+        url = "github:caelestia-dots/cli";
+        inputs.nixpkgs.follows = "nixpkgs-unstable";
+      };
   };
 
   outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, stylix, ... }@inputs:
@@ -23,6 +32,33 @@
       pkgs-unstable = nixpkgs-unstable.legacyPackages.${system};
   in
   {
+    packages.${system}.elegant-grub-theme = pkgs.stdenv.mkDerivation rec {
+      pname = "elegant-grub2-themes";
+      version = "2025-03-25";
+
+      src = pkgs.fetchFromGitHub {
+        owner = "vinceliuice";
+        repo = "elegant-grub2-themes";
+        rev = "2025-03-25";
+        sha256 = "sha256-M9k6R/rUvEpBTSnZ2PMv5piV50rGTBrcmPU4gsS7Byg=";
+      };
+
+      installPhase = ''
+        set -e
+        set -x
+
+        echo "Installing Elegant GRUB theme into $out"
+        chmod +x ./install.sh
+        mkdir -p $out
+        export BOOTDIR=$out
+
+        # Run install.sh in Nix store
+        bash ./install.sh -t mountain -p window -s 1080p
+
+        echo "Listing installed theme:"
+        ls -la $out
+      '';
+    };
     nixosConfigurations = {
       nixos = lib.nixosSystem {
         inherit system;
@@ -32,6 +68,7 @@
         ];
         specialArgs = {
           inherit pkgs-unstable;
+          inherit inputs;
         };
       };
     };
