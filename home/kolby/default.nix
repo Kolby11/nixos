@@ -5,7 +5,6 @@
     # ./config.nix
     ./git.nix
     ./packages.nix
-    ./stylix.nix
     ./programs.nix
     ./fonts.nix
   ];
