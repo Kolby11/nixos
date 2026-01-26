@@ -30,7 +30,7 @@
         enable = true;
         theme = "mojave";
         type = "blur";
-        side = "right";
+        side = "left";
         color = "dark";
         screen = "1080p";
         logo = "system";

@@ -20,7 +20,9 @@
         url = "github:caelestia-dots/cli";
         inputs.nixpkgs.follows = "nixpkgs-unstable";
       };
-      elegant-grub2-themes.url = "github:kolby11/elegant-grub2-themes";
+      elegant-grub2-themes = {
+        url = "github:kolby11/elegant-grub2-themes";
+      };
   };
 
   outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, elegant-grub2-themes, ... }@inputs:
