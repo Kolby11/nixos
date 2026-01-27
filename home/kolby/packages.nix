@@ -37,12 +37,9 @@
         winetricks
       ];
     })
-    discord
+    vesktop # Discord
 
     # Music
     spotify
-
-    # Background
-    nitrogen
   ];
 }
