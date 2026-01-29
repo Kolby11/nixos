@@ -4,16 +4,15 @@
     loader = {
       timeout = 5;
       efi = {
+        canTouchEfiVariables = true;
         efiSysMountPoint = "/boot";
       };
       grub = {
         enable = true;
-        useOSProber = true;
-        copyKernels = true;
-        efiInstallAsRemovable = true;
+        device = "nodev";
         efiSupport = true;
+        useOSProber = true;
         fsIdentifier = "label";
-        devices = [ "nodev" ];
         gfxpayloadBios = "keep";
         extraEntries = ''
           menuentry 'Reboot' {
@@ -36,11 +35,10 @@
         logo = "system";
       };
     };
-    
+    tmp.cleanOnBoot = true;
+    supportedFilesystems = [ "ext4" "ntfs" ];
     plymouth = {
       enable = true;
     };
-    tmp.cleanOnBoot = true;
-    supportedFilesystems = [ "ext4" "ntfs" ];
   };
 }

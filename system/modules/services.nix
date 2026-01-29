@@ -5,6 +5,13 @@
     dbus.enable = true;
     openssh.enable = true;
 
+    libinput = {
+      enable = true;
+      touchpad = {
+        naturalScrolling = true;  # This inverts the scroll direction
+      };
+    };
+
     displayManager = {
       sddm = {
         enable = true;
