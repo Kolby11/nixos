@@ -2,7 +2,6 @@
 
 {
   home.packages = with pkgs; [
-    (pkgs.callPackage ./wallrizz.nix {})
     fzf
     fastfetch
     # Dev

@@ -15,3 +15,7 @@ https://discourse.nixos.org/t/how-to-make-scripts-imported-via-home-manager-exec
 - On the other hand, all the configuration for the specific desktop environment should be handled in the home manager, in mind with
 the provided programs from the desktop.
 - The home manager configuration for a user should be desktop specific. This means that there will be one user used for this specific desktop.
+
+### Reading mode
+Shader taken from, all credits go to hum
+https://github.com/snes19xx/surface-dots?tab=readme-ov-file#reading-mode

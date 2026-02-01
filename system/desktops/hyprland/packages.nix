@@ -2,14 +2,13 @@
 {
   environment.systemPackages = with pkgs; [
     waybar
-    swayidle
-    swaylock-effects
     wlogout
     wl-clipboard
     lxqt.pcmanfm-qt
     nwg-displays
     hyprshot
     hyprpaper
+    hyprshade
     vscode
     libnotify
     inotify-tools

@@ -3,7 +3,6 @@
 {
   imports = [
     # ./config.nix
-    ./git.nix
     ./packages.nix
     ./programs.nix
     ./fonts.nix

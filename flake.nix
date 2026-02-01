@@ -31,6 +31,7 @@
         url = "github:Gerg-L/spicetify-nix";
         inputs.nixpkgs.follows = "nixpkgs";
       };
+      yazi.url = "github:sxyazi/yazi";
   };
 
   outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, elegant-grub2-themes, ... }@inputs:
@@ -59,7 +60,15 @@
        kolby = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
         modules = [
-          ./home/kolby ];
+          ./home/kolby
+          ({ pkgs, ... }: {
+            home.packages = [
+              (inputs.yazi.packages.${pkgs.system}.default.override {
+                _7zz = pkgs._7zz-rar;
+              })
+            ];
+          })
+          ];
         extraSpecialArgs = {
           inherit pkgs-unstable;
           inherit inputs;
