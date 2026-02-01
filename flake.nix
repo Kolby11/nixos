@@ -23,6 +23,14 @@
       elegant-grub2-themes = {
         url = "github:kolby11/elegant-grub2-themes";
       };
+      kew = {
+        url = "github:kolby11/kew";
+        inputs.nixpkgs.follows = "nixpkgs";
+      };
+      spicetify = {
+        url = "github:Gerg-L/spicetify-nix";
+        inputs.nixpkgs.follows = "nixpkgs";
+      };
   };
 
   outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, elegant-grub2-themes, ... }@inputs:

@@ -1,4 +1,4 @@
-{ pkgs, pkgs-unstable, ... }:
+{ pkgs, pkgs-unstable, inputs, ... }:
 
 {
   home.packages = with pkgs; [
@@ -41,5 +41,6 @@
 
     # Music
     spotify
+    inputs.kew.packages.${pkgs.system}.default
   ];
 }
