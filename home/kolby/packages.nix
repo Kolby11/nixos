@@ -41,5 +41,12 @@
     # Music
     spotify
     inputs.kew.packages.${pkgs.system}.default
+
+    # Game development
+    godot-mono
+    unityhub
+    direnv
+    dotnet-sdk
+    omnisharp-roslyn
   ];
 }

@@ -5,6 +5,7 @@
     # ./config.nix
     ./packages.nix
     ./programs.nix
+    ./environment.nix
     ./fonts.nix
   ];
 

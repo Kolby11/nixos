@@ -24,6 +24,7 @@
 
     xserver = {
       enable = true;
+      videoDrivers = [ "nvidia" ];
     };
   };
 }
