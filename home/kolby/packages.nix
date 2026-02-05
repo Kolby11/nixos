@@ -4,6 +4,10 @@
   home.packages = with pkgs; [
     fzf
     fastfetch
+
+    # Editor
+    vscode
+
     # Dev
     cmake
     gcc
@@ -46,7 +50,7 @@
     godot-mono
     unityhub
     direnv
-    dotnet-sdk
-    omnisharp-roslyn
+    dotnet-sdk_9
+    dotnet-runtime_9
   ];
 }

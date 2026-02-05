@@ -5,6 +5,9 @@
     dbus.enable = true;
     openssh.enable = true;
 
+    # Keyring
+    gnome.gnome-keyring.enable = true;
+
     libinput = {
       enable = true;
       touchpad = {

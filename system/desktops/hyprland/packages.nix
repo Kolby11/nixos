@@ -9,7 +9,6 @@
     hyprshot
     hyprpaper
     hyprshade
-    vscode
     libnotify
     inotify-tools
 
