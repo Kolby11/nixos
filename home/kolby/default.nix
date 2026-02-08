@@ -20,6 +20,14 @@
     username = "kolby";
     homeDirectory = "/home/kolby";
     stateVersion = "25.05";
+
+    pointerCursor = {
+      name = "Bibata-Modern-Classic";
+      package = pkgs.bibata-cursors;
+      size = 18;
+      gtk.enable = true;
+      x11.enable = true;
+    };
   };
 }
 
