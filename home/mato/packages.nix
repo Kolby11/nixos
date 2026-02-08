@@ -2,7 +2,6 @@
 
 {
   home.packages = with pkgs; [
-    fastfetch
     # Dev
     cmake
     gcc

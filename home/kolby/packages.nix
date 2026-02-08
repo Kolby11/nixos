@@ -2,8 +2,9 @@
 
 {
   home.packages = with pkgs; [
+    # Essentials
     fzf
-    fastfetch
+    matugen
 
     # Editor
     vscode
@@ -17,16 +18,19 @@
     nodePackages.pnpm
     (python3.withPackages (python-pkgs: [
       python-pkgs.pip
-      python-pkgs.requests
     ]))
     rustup
     pkgsCross.mingwW64.stdenv.cc 
     pkgsCross.mingwW64.windows.pthreads
-    matugen
+    dotnet-sdk_9
+    dotnet-runtime_9
 
+    # Browser
     firefox
-    # Work
+
+    # Communication
     teams-for-linux
+    vesktop # Discord client
 
     # Bluetooth
     blueberry
@@ -40,17 +44,20 @@
         winetricks
       ];
     })
-    vesktop # Discord
+
+    # Drawing
+    krita
+
+    # 3D Modeling
+    blender
 
     # Music
     spotify
     inputs.kew.packages.${pkgs.system}.default
 
     # Game development
-    godot-mono
-    unityhub
     direnv
-    dotnet-sdk_9
-    dotnet-runtime_9
+    unityhub
+    godot-mono
   ];
 }

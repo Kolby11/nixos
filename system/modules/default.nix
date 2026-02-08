@@ -16,7 +16,7 @@
     ./services.nix
     ./sound.nix
     ./time.nix
-    ./theme.nix
+    ./theme
     ./users.nix
     ./virtualisation.nix
   ];

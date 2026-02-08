@@ -11,7 +11,9 @@
     hyprshade
     libnotify
     inotify-tools
-
+    slurp
+    hyprpicker
+    grim
     # Terminal
     kitty
     starship

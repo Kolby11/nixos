@@ -4,8 +4,9 @@
 {
   environment.systemPackages = with pkgs; [
     cmake
-    home-manager
     btop
+    fastfetch
+    home-manager
     git
     killall
     vim

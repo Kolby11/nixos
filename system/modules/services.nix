@@ -19,7 +19,7 @@
       sddm = {
         enable = true;
         wayland.enable = true;
-        theme = "catppuccin-mocha";
+        theme = "greenleaf";
         package = pkgs.kdePackages.sddm;
       };
       defaultSession = "hyprland";

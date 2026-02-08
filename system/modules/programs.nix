@@ -4,8 +4,8 @@
   xdg.portal = {
     enable = true;
     xdgOpenUsePortal = true;
-    extraPortals = with pkgs; [
-      kdePackages.xdg-desktop-portal-kde
+    extraPortals = with pkgs; [ 
+      xdg-desktop-portal-gtk
     ];
   };
 
