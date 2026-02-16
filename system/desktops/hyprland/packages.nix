@@ -16,8 +16,9 @@
     grim
     # Terminal
     kitty
-    starship
+    oh-my-posh
 
+    lm_sensors
 
     kdePackages.qtwayland
     kdePackages.qtpositioning

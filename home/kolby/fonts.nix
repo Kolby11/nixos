@@ -24,6 +24,9 @@
         "FiraCode Nerd Font Mono"
         "UbuntuMono Nerd Font Mono"
       ];
+      emoji = [
+        "FiraCode Nerd Font"
+      ];
     };
   };
 }
