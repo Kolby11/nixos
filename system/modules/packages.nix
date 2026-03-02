@@ -3,7 +3,6 @@
 
 {
   environment.systemPackages = with pkgs; [
-    cmake
     btop
     fastfetch
     home-manager

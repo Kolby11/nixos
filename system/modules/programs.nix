@@ -10,6 +10,10 @@
   };
 
   programs = {
+    direnv = {
+      enable = true;
+      nix-direnv.enable = true;
+    };
     nix-ld = {
       enable = true;
       libraries = with pkgs; [
@@ -20,7 +24,6 @@
       ];
     };
     fish.enable = true;
-
     gnupg = {
       agent = {
         enable = true;

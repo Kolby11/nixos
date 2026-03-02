@@ -7,10 +7,11 @@
     matugen
 
     # Editor
-    vscode
+    vscode-fhs
 
     # Dev
     cmake
+    gnumake
     gcc
     go
     lua
@@ -24,6 +25,9 @@
     pkgsCross.mingwW64.windows.pthreads
     dotnet-sdk_9
     dotnet-runtime_9
+
+    # AI
+    claude-code
 
     # Browser
     firefox
