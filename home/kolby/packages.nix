@@ -5,6 +5,7 @@
     # Essentials
     fzf
     matugen
+    tmatrix
 
     # Editor
     vscode-fhs

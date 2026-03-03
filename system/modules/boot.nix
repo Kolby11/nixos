@@ -1,6 +1,7 @@
 { config, pkgs, lib, ... }:
 {
   boot = {
+    initrd.kernelModules = [ "nvidia" "nvidia_modeset" "nvidia_uvm" "nvidia_drm" ];
     loader = {
       timeout = 5;
       efi = {
@@ -13,7 +14,10 @@
         efiSupport = true;
         useOSProber = true;
         fsIdentifier = "label";
+
+        gfxpayloadEfi = "keep";
         gfxpayloadBios = "keep";
+
         extraEntries = ''
           menuentry 'Reboot' {
             reboot
