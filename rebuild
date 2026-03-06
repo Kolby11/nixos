@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+SETUP="$DIR/.setup"
+
+if [[ ! -f "$SETUP" ]]; then
+  echo "Error: no .setup found — run ./setup.sh first." >&2
+  exit 1
+fi
+
+source "$SETUP"
+
+if [[ -z "${DEVICE:-}" ]]; then
+  echo "Error: DEVICE not set in .setup." >&2
+  exit 1
+fi
+
+echo "Rebuilding: $DEVICE"
+sudo nixos-rebuild switch --flake "$DIR#$DEVICE"

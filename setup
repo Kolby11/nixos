@@ -1,0 +1,98 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+CONFIGS_DIR="$DIR/system/configurations"
+OUTPUT="$DIR/.setup"
+
+# ── helpers ──────────────────────────────────────────────────────────────────
+
+prompt_menu() {
+  local prompt="$1"; shift
+  local -a items=("$@")
+  echo "$prompt"
+  for i in "${!items[@]}"; do
+    printf "  %d) %s\n" "$((i + 1))" "${items[$i]}"
+  done
+  echo
+  local choice
+  while true; do
+    read -rp "Select [1-${#items[@]}]: " choice
+    if [[ "$choice" =~ ^[0-9]+$ ]] && (( choice >= 1 && choice <= ${#items[@]} )); then
+      REPLY="${items[$((choice - 1))]}"
+      return
+    fi
+    echo "  Invalid — enter a number between 1 and ${#items[@]}."
+  done
+}
+
+# ── 1. pick device from system/configurations or create new ──────────────────
+
+mapfile -t existing < <(
+  find "$CONFIGS_DIR" -mindepth 1 -maxdepth 1 -type d -printf '%f\n' | sort
+)
+
+items=("${existing[@]}" "Create new configuration")
+
+prompt_menu "Select configuration:" "${items[@]}"
+selection="$REPLY"
+echo
+
+if [[ "$selection" == "Create new configuration" ]]; then
+  read -rp "Configuration name: " device
+  device="${device// /-}"
+  if [[ -z "$device" ]]; then
+    echo "Error: configuration name cannot be empty." >&2
+    exit 1
+  fi
+  config_dir="$CONFIGS_DIR/$device"
+  if [[ -d "$config_dir" ]]; then
+    echo "Error: configuration '$device' already exists." >&2
+    exit 1
+  fi
+  mkdir -p "$config_dir"
+  echo "Generating hardware config..."
+  nixos-generate-config --show-hardware-config > "$config_dir/hardware-config.nix"
+  echo "Created: $config_dir/hardware-config.nix"
+
+  cat > "$config_dir/default.nix" <<'NIXEOF'
+{ ... }:
+{
+  imports = [
+    ./hardware-config.nix
+  ];
+}
+NIXEOF
+  echo "Created: $config_dir/default.nix"
+
+  # Add the new configuration to system/configurations/default.nix
+  default_nix="$CONFIGS_DIR/default.nix"
+  awk -v dev="$device" '/];$/ { sub(/];$/, "] ++"); print; print "    lib.optionals (device == \"" dev "\") [ ./" dev " ];"; next } 1' \
+    "$default_nix" > "$default_nix.tmp" && mv "$default_nix.tmp" "$default_nix"
+  echo "Updated: $default_nix"
+
+  # Add the new configuration to flake.nix nixosConfigurations
+  awk -v dev="$device" '
+    /nixosConfigurations = \{/ { in_block=1 }
+    in_block && /^    \};/ { print "      " dev " = mkSystem \"" dev "\";"; in_block=0 }
+    1
+  ' "$DIR/flake.nix" > "$DIR/flake.nix.tmp" && mv "$DIR/flake.nix.tmp" "$DIR/flake.nix"
+  echo "Updated: $DIR/flake.nix"
+  echo
+  echo "Configuration '$device' created. Edit $config_dir/ to set it up, then re-run setup.sh."
+  exit 0
+fi
+
+device="$selection"
+
+# ── 2. write config file ─────────────────────────────────────────────────────
+
+cat > "$OUTPUT" <<EOF
+DEVICE=$device
+EOF
+
+echo "Written to $OUTPUT:"
+echo "  DEVICE=$device"
+echo
+echo "To rebuild, run:  ./rebuild"

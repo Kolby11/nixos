@@ -2,7 +2,6 @@
 
 {
   imports = [
-    ./activation-scripts.nix
     ./boot.nix
     ./gaming.nix
     ./hardware.nix

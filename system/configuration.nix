@@ -5,7 +5,7 @@
     ./hardware-configuration.nix
     ./modules
     ./desktops
-    ./specialisations
+    ./configurations
   ];
 
   system.stateVersion = "25.05"; 

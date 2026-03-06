@@ -39,20 +39,21 @@
     system = "x86_64-linux";
     pkgs = nixpkgs.legacyPackages.${system};
     pkgs-unstable = nixpkgs-unstable.legacyPackages.${system};
+    mkSystem = device: lib.nixosSystem {
+      inherit system;
+      modules = [
+        ./system/configuration.nix
+        elegant-grub2-themes.nixosModules.default
+      ];
+      specialArgs = {
+        inherit pkgs-unstable inputs device;
+      };
+    };
   in
   {
     nixosConfigurations = {
-      nixos = lib.nixosSystem {
-        inherit system;
-        modules = [
-          ./system/configuration.nix
-          elegant-grub2-themes.nixosModules.default
-        ];
-        specialArgs = {
-          inherit pkgs-unstable;
-          inherit inputs;
-        };
-      };
+      desktop = mkSystem "desktop";
+      legion = mkSystem "legion";
     };
     homeConfigurations = {
       kolby = home-manager.lib.homeManagerConfiguration {

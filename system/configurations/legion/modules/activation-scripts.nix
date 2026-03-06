@@ -7,7 +7,6 @@
 
       if [ -f "$GRUB_CFG" ]; then
         ${pkgs.gnused}/bin/sed -i \
-          -e 's/menuentry "NixOS - (desktop[^"]*)"  {/menuentry "NixOS - Desktop" --class nixos {/' \
           -e 's/menuentry "NixOS - (legion-docked[^"]*)"  {/menuentry "NixOS - Legion Docked" --class nixos {/' \
           -e 's/menuentry "NixOS - (legion-on-the-go[^"]*)"  {/menuentry "NixOS - Legion On The Go" --class nixos {/' \
           "$GRUB_CFG"
