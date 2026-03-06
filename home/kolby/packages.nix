@@ -61,7 +61,6 @@
     inputs.kew.packages.${pkgs.system}.default
 
     # Game development
-    direnv
     unityhub
     godot-mono
   ];

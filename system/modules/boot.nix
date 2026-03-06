@@ -17,15 +17,6 @@
 
         gfxpayloadEfi = "keep";
         gfxpayloadBios = "keep";
-
-        extraEntries = ''
-          menuentry 'Reboot' {
-            reboot
-          }
-          menuentry 'Poweroff' {
-            halt
-          }
-        '';
       };
       
       # Configure the elegant theme here
