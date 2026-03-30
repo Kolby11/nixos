@@ -22,7 +22,7 @@
       elegant-grub2-theme = {
         enable = true;
         theme = "mojave";
-        type = "blur";
+        type = "window";
         side = "left";
         color = "dark";
         screen = "1080p";
