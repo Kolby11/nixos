@@ -1,4 +1,4 @@
-{ pkgs, pkgs-unstable, inputs, ... }:
+{ pkgs, pkgs-unstable, inputs, lib, ... }:
 
 {
   home.packages = with pkgs; [
@@ -6,21 +6,23 @@
     fzf
     matugen
     tmatrix
+    cliphist
+    wl-clipboard
 
     # Editor
     vscode-fhs
 
     # Dev
     cmake
+    ninja
     gnumake
     gcc
     go
     lua
     nodejs_24
     nodePackages.pnpm
-    (python3.withPackages (python-pkgs: [
-      python-pkgs.pip
-    ]))
+    (lib.hiPrio python3)
+    (lib.lowPrio kdePackages.breeze-icons)
     rustup
     pkgsCross.mingwW64.stdenv.cc 
     pkgsCross.mingwW64.windows.pthreads
@@ -59,6 +61,22 @@
     # Music
     spotify
     inputs.kew.packages.${pkgs.system}.default
+
+    # ii shell Python dependencies
+    (python3.withPackages (ps: with ps; [
+      dbus-python
+      materialyoucolor
+      material-color-utilities
+      pywayland
+      psutil
+      pygobject3
+      pycairo
+      setproctitle
+      numpy
+      pillow
+      tqdm
+      loguru
+    ]))
 
     # Game development
     unityhub

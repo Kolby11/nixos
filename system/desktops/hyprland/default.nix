@@ -5,6 +5,7 @@
     ./packages.nix
     ./programs.nix
     ./services.nix
+    ./ii-shell.nix
   ];
 }
 

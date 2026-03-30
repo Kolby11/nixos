@@ -1,0 +1,25 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(journalctl:*)",
+      "Bash(git:*)",
+      "Bash(/home/kolby/.config/nixos/system/specialisations/default.nix:*)",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "Bash(systemctl:*)",
+      "Bash(echo:*)",
+      "Bash(nix eval:*)",
+      "WebSearch",
+      "Bash(qs:*)",
+      "Bash(fc-list:*)",
+      "Bash(nix-env:*)",
+      "Bash(python3:*)",
+      "Bash(fc-query:*)",
+      "Bash(fc-cache:*)",
+      "Bash(cat:*)",
+      "WebFetch(domain:end-4.github.io)",
+      "WebFetch(domain:ii.clsty.link)",
+      "Bash(pango-list:*)"
+    ]
+  }
+}

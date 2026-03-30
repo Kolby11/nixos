@@ -4,6 +4,10 @@
   services = {
     dbus.enable = true;
     openssh.enable = true;
+    geoclue2.enable = true;  # For QtPositioning
+    upower.enable = true; # For battery status
+    udisks2.enable = true; # For external storage in Nautilus
+
 
     # Keyring
     gnome.gnome-keyring.enable = true;
@@ -22,7 +26,7 @@
         theme = "greenleaf";
         package = pkgs.kdePackages.sddm;
       };
-      defaultSession = "hyprland";
+      defaultSession = "hyprland-uwsm";
     };
 
     xserver = {

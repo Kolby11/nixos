@@ -1,10 +1,14 @@
 { pkgs, ... }:
 
+let
+  customPkgs = import ../../pkgs { inherit pkgs; };
+in
 {
   home.packages = with pkgs; [
     nerd-fonts.fira-code
     nerd-fonts.jetbrains-mono
     nerd-fonts.ubuntu-mono
+    customPkgs.material-symbols
   ];
 
   home.pointerCursor = {

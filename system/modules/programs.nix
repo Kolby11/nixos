@@ -10,10 +10,10 @@
   };
 
   programs = {
-    direnv = {
-      enable = true;
-      nix-direnv.enable = true;
-    };
+    # direnv = {
+    #   enable = true;
+    #   nix-direnv.enable = true;
+    # };
     nix-ld = {
       enable = true;
       libraries = with pkgs; [

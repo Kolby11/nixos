@@ -15,6 +15,7 @@
     pkg-config
     wget
     stow
+    eza
   ];
 }
 
