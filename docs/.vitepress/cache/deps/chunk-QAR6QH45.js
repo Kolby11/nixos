@@ -36,9 +36,9 @@ import {
   unref,
   watch,
   watchEffect
-} from "./chunk-CUTMDDMK.js";
+} from "./chunk-CIQQ7TXU.js";
 
-// node_modules/.pnpm/@vueuse+shared@13.9.0_vue@3.5.22/node_modules/@vueuse/shared/index.mjs
+// node_modules/@vueuse/shared/index.mjs
 function computedEager(fn, options) {
   var _a;
   const result = shallowRef();
@@ -1572,7 +1572,7 @@ function whenever(source, cb, options) {
   return stop;
 }
 
-// node_modules/.pnpm/@vueuse+core@13.9.0_vue@3.5.22/node_modules/@vueuse/core/index.mjs
+// node_modules/@vueuse/core/index.mjs
 function computedAsync(evaluationCallback, initialState, optionsOrRef) {
   var _a;
   let options;
@@ -2834,7 +2834,7 @@ function useBluetooth(options) {
     error
   };
 }
-var ssrWidthSymbol = Symbol("vueuse-ssr-width");
+var ssrWidthSymbol = /* @__PURE__ */ Symbol("vueuse-ssr-width");
 function useSSRWidth() {
   const ssrWidth = hasInjectionContext() ? injectLocal(ssrWidthSymbol, null) : null;
   return typeof ssrWidth === "number" ? ssrWidth : void 0;
@@ -9949,4 +9949,4 @@ export {
   useWindowScroll,
   useWindowSize
 };
-//# sourceMappingURL=chunk-Q27APZWH.js.map
+//# sourceMappingURL=chunk-QAR6QH45.js.map

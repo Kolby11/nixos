@@ -29,7 +29,7 @@
         logo = "system";
       };
     };
-    tmp.cleanOnBoot = true;
+    #tmp.cleanOnBoot = true;
     supportedFilesystems = [ "ext4" "ntfs" ];
     plymouth = {
       enable = true;
