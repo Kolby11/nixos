@@ -1,10 +1,10 @@
 {
   description = "Mato NixOS";
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     nixpkgs-unstable.url = "nixpkgs/nixos-unstable";
     home-manager = {
-      url = "github:nix-community/home-manager/release-25.05";
+      url = "github:nix-community/home-manager/master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     elegant-grub2-themes = {
@@ -58,7 +58,7 @@
             nixpkgs.config.allowUnfree = true;
             nixpkgs.overlays = [ inputs.claude-code.overlays.default ];
             home.packages = [
-              (inputs.yazi.packages.${pkgs.system}.default.override {
+              (inputs.yazi.packages.${pkgs.stdenv.hostPlatform.system}.default.override {
                 _7zz = pkgs._7zz-rar;
               })
               pkgs.claude-code

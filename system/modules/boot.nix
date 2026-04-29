@@ -5,12 +5,13 @@
       timeout = 5;
       efi = {
         canTouchEfiVariables = true;
-        efiSysMountPoint = "/boot";
+        efiSysMountPoint = "/boot/efi";
       };
       grub = {
         enable = true;
         device = "nodev";
         efiSupport = true;
+        
         useOSProber = true;
         fsIdentifier = "label";
 

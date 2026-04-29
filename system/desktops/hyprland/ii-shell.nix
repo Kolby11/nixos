@@ -41,7 +41,7 @@ let
     export QML2_IMPORT_PATH="${lib.makeSearchPath "lib/qt-6/qml" qtImports}"
     export XDG_DATA_DIRS="${lib.makeSearchPath "share" iconThemes}:$HOME/.nix-profile/share:$HOME/.local/share:/etc/profiles/per-user/$USER/share:/run/current-system/sw/share:/usr/share:$XDG_DATA_DIRS"
     export QT_WAYLAND_DISABLE_WINDOWDECORATION=1
-    exec ${inputs.quickshell.packages.${pkgs-unstable.system}.default}/bin/qs "$@"
+    exec ${inputs.quickshell.packages.${pkgs-unstable.stdenv.hostPlatform.system}.default}/bin/qs "$@"
   '';
 in
 {
@@ -58,9 +58,9 @@ in
     pkgs.songrec
 
     # Media / wallpaper
-    pkgs.mpv
-    pkgs.mpvpaper
-    pkgs.swww
+    # pkgs.mpv
+    # pkgs.mpvpaper
+    pkgs.awww
 
     # Brightness / display
     pkgs.brightnessctl

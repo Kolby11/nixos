@@ -20,7 +20,7 @@
     go
     lua
     nodejs_24
-    nodePackages.pnpm
+    pnpm
     (lib.hiPrio python3)
     (lib.lowPrio kdePackages.breeze-icons)
     rustup
@@ -40,14 +40,14 @@
     vesktop # Discord client
 
     # Bluetooth
-    blueberry
+    blueman
 
     # Gaming
     steam
     steam-run
     (lutris.override {
       extraPkgs = pkgs: [
-        wineWowPackages.stable
+        wineWow64Packages.stable
         winetricks
       ];
     })
@@ -60,7 +60,7 @@
 
     # Music
     spotify
-    inputs.kew.packages.${pkgs.system}.default
+    inputs.kew.packages.${pkgs.stdenv.hostPlatform.system}.default
 
     # ii shell Python dependencies
     (python3.withPackages (ps: with ps; [
