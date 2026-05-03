@@ -1,10 +1,12 @@
-{ config, pkgs, ... }:
+{ config, pkgs, pkgs-unstable, ... }:
 
 {
   programs = {
     hyprland = {
       enable = true;
       withUWSM = true;
+      package = pkgs-unstable.hyprland;
+      portalPackage = pkgs-unstable.xdg-desktop-portal-hyprland;
     };
     hyprlock.enable = true;
     uwsm.waylandCompositors.hyprland = {
@@ -12,5 +14,5 @@
       comment = "Hyprland compositor managed by UWSM";
       binPath = "/run/current-system/sw/bin/Hyprland";
     };
-	};
+  };
 }
