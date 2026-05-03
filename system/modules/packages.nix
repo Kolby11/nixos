@@ -1,8 +1,8 @@
 
-{ config, pkgs, ... }:
+{ config, pkgs, pkgs-unstable, ... }:
 
 {
-  environment.systemPackages = with pkgs; [
+  environment.systemPackages = with pkgs-unstable; [
     btop
     fastfetch
     home-manager
@@ -18,4 +18,3 @@
     eza
   ];
 }
-

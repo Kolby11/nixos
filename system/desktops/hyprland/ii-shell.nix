@@ -60,7 +60,7 @@ in
     # Media / wallpaper
     # pkgs.mpv
     # pkgs.mpvpaper
-    pkgs.awww
+    pkgs.swww
 
     # Brightness / display
     pkgs.brightnessctl

@@ -1,7 +1,7 @@
 { pkgs, pkgs-unstable, inputs, lib, ... }:
 
 {
-  home.packages = with pkgs; [
+  home.packages = with pkgs-unstable; [
     # Essentials
     fzf
     matugen
@@ -27,10 +27,10 @@
     pkgsCross.mingwW64.stdenv.cc 
     pkgsCross.mingwW64.windows.pthreads
     dotnet-sdk_9
-    dotnet-runtime_9
 
     # AI
     claude-code
+    inputs.codex-cli-nix.packages.${pkgs.stdenv.hostPlatform.system}.default
 
     # Browser
     firefox
@@ -45,7 +45,7 @@
     # Gaming
     steam
     steam-run
-    (lutris.override {
+    (pkgs.lutris.override {
       extraPkgs = pkgs: [
         wineWow64Packages.stable
         winetricks

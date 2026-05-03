@@ -19,7 +19,10 @@
       "Bash(cat:*)",
       "WebFetch(domain:end-4.github.io)",
       "WebFetch(domain:ii.clsty.link)",
-      "Bash(pango-list:*)"
+      "Bash(pango-list:*)",
+      "Bash(efibootmgr *)",
+      "Bash(nix-shell *)",
+      "Bash(sudo ls *)"
     ]
   }
 }

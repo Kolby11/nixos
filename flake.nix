@@ -1,10 +1,11 @@
 {
   description = "Mato NixOS";
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    nixpkgs-unstable.url = "nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
+
+    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
     home-manager = {
-      url = "github:nix-community/home-manager/master";
+      url = "github:nix-community/home-manager/release-25.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     elegant-grub2-themes = {
@@ -19,6 +20,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     claude-code.url = "github:sadjow/claude-code-nix";
+    codex-cli-nix.url = "github:sadjow/codex-cli-nix";
     yazi.url = "github:sxyazi/yazi";
     eza.url = "github:eza-community/eza";
     quickshell = {
@@ -32,7 +34,10 @@
     lib = nixpkgs.lib;
     system = "x86_64-linux";
     pkgs = nixpkgs.legacyPackages.${system};
-    pkgs-unstable = nixpkgs-unstable.legacyPackages.${system};
+    pkgs-unstable = import nixpkgs-unstable {
+      inherit system;
+      config.allowUnfree = true;
+    };
     mkSystem = device: lib.nixosSystem {
       inherit system;
       modules = [
@@ -61,7 +66,6 @@
               (inputs.yazi.packages.${pkgs.stdenv.hostPlatform.system}.default.override {
                 _7zz = pkgs._7zz-rar;
               })
-              pkgs.claude-code
             ];
           })
         ];
