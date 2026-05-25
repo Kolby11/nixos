@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+CONFIGS_DIR="$DIR/system/configurations"
+
+prompt_menu() {
+  local prompt="$1"; shift
+  local -a items=("$@")
+  echo "$prompt"
+  for i in "${!items[@]}"; do
+    printf "  %d) %s\n" "$((i + 1))" "${items[$i]}"
+  done
+  echo
+  local choice
+  while true; do
+    read -rp "Select [1-${#items[@]}]: " choice
+    if [[ "$choice" =~ ^[0-9]+$ ]] && (( choice >= 1 && choice <= ${#items[@]} )); then
+      REPLY="${items[$((choice - 1))]}"
+      return
+    fi
+    echo "  Invalid — enter a number between 1 and ${#items[@]}."
+  done
+}
+
+mapfile -t configs < <(find "$CONFIGS_DIR" -mindepth 1 -maxdepth 1 -type d -printf '%f\n' | sort)
+
+prompt_menu "Select configuration to install:" "${configs[@]}"
+DEVICE="$REPLY"
+
+echo "Installing NixOS ($DEVICE)..."
+nixos-install --flake "$DIR#$DEVICE" --no-root-passwd

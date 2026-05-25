@@ -53,7 +53,7 @@ if [[ "$selection" == "Create new configuration" ]]; then
   fi
   mkdir -p "$config_dir"
   echo "Generating hardware config..."
-  nixos-generate-config --show-hardware-config > "$config_dir/hardware-config.nix"
+  nixos-generate-config --root /mnt --show-hardware-config > "$config_dir/hardware-config.nix"
   echo "Created: $config_dir/hardware-config.nix"
 
   cat > "$config_dir/default.nix" <<'NIXEOF'

@@ -53,6 +53,7 @@
     nixosConfigurations = {
       desktop = mkSystem "desktop";
       legion = mkSystem "legion";
+      hp = mkSystem "hp";
     };
     homeConfigurations = {
       kolby = home-manager.lib.homeManagerConfiguration {

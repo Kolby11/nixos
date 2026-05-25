@@ -22,7 +22,9 @@
       "Bash(pango-list:*)",
       "Bash(efibootmgr *)",
       "Bash(nix-shell *)",
-      "Bash(sudo ls *)"
+      "Bash(sudo ls *)",
+      "Bash(chmod +x /home/kolby/.config/nixos/install)",
+      "Bash(chmod +x /home/kolby/.config/nixos/setup)"
     ]
   }
 }
