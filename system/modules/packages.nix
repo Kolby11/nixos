@@ -5,6 +5,7 @@
   environment.systemPackages = with pkgs-unstable; [
     btop
     fastfetch
+    ripgrep
     home-manager
     git
     killall

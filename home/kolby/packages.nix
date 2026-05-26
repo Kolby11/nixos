@@ -4,10 +4,10 @@
   home.packages = with pkgs-unstable; [
     # Essentials
     fzf
-    matugen
+    (lib.lowPrio matugen)
     tmatrix
-    cliphist
-    wl-clipboard
+    (lib.lowPrio cliphist)
+    (lib.lowPrio wl-clipboard)
 
     # Editor
     vscode-fhs
@@ -63,7 +63,7 @@
     inputs.kew.packages.${pkgs.stdenv.hostPlatform.system}.default
 
     # ii shell Python dependencies
-    (python3.withPackages (ps: with ps; [
+    (lib.lowPrio (python3.withPackages (ps: with ps; [
       dbus-python
       materialyoucolor
       material-color-utilities
@@ -76,7 +76,7 @@
       pillow
       tqdm
       loguru
-    ]))
+    ])))
 
     # Game development
     unityhub

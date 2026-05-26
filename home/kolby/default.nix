@@ -2,6 +2,7 @@
 
 {
   imports = [
+    inputs.illogical-flake.homeManagerModules.default
     ./packages.nix
     ./programs.nix
     ./environment.nix
@@ -21,5 +22,3 @@
     stateVersion = "25.05";
   };
 }
-
-

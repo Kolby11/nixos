@@ -7,6 +7,7 @@
     geoclue2.enable = true;  # For QtPositioning
     upower.enable = true; # For battery status
     udisks2.enable = true; # For external storage in Nautilus
+    power-profiles-daemon.enable = true; # CPU/platform power management
 
 
     # Keyring

@@ -24,7 +24,29 @@
       "Bash(nix-shell *)",
       "Bash(sudo ls *)",
       "Bash(chmod +x /home/kolby/.config/nixos/install)",
-      "Bash(chmod +x /home/kolby/.config/nixos/setup)"
+      "Bash(chmod +x /home/kolby/.config/nixos/setup)",
+      "Read(//home/kolby/.config/**)",
+      "Read(//home/kolby/.config/hyprland-dots/**)",
+      "Read(//tmp/**)",
+      "Bash(stow --simulate -vt ~ hypr)",
+      "Bash(stow -vt ~ hypr)",
+      "Bash(cp ~/.config/hypr/hyprland/scripts/fuzzel-emoji.sh ~/.config/dotfiles/hypr/.config/hypr/hyprland/scripts/fuzzel-emoji.sh)",
+      "Bash(cp ~/.config/hypr/hyprlock/colors.conf ~/.config/dotfiles/hypr/.config/hypr/hyprlock/colors.conf)",
+      "Bash(xargs -I {} sh -c 'echo \"=== {} ===\"; cat {}')",
+      "Bash(nix flake *)",
+      "Bash(nix-store -q --references /nix/store/x495w0ryq82j627djnkah03lzcpsf7j3-hyprland-0.54.3)",
+      "Bash(/home/kolby/.nix-profile/bin/strings /nix/store/x495w0ryq82j627djnkah03lzcpsf7j3-hyprland-0.54.3/bin/Hyprland)",
+      "Bash(/home/kolby/.nix-profile/bin/strings /nix/store/x495w0ryq82j627djnkah03lzcpsf7j3-hyprland-0.54.3/bin/hyprland)",
+      "Bash(/home/kolby/.nix-profile/bin/strings /nix/store/x495w0ryq82j627djnkah03lzcpsf7j3-hyprland-0.54.3/bin/.Hyprland-wrapped)",
+      "Bash(hyprctl getoption *)",
+      "Bash(hyprctl -j getoption misc)",
+      "Bash(hyprctl -j keyword help)",
+      "Bash(/home/kolby/.nix-profile/bin/strings /run/current-system/sw/bin/start-hyprland)",
+      "Bash(grep -E \"^[A-Z][A-Z_]+$|_HYPR|HL_|_LAUNCHER|FROM_\" /tmp/sh_strings.txt)",
+      "Bash(grep -E \"^[A-Z][A-Z_]{6,}$\" /tmp/sh_strings.txt)",
+      "Bash(grep -nE \"^[a-z_]+:[a-z_]+$\" /tmp/hl_strings.txt)",
+      "Bash(nix-store -q --references /nix/store/7fjybf523bb9rjc8rb5z4wpvl42krscf-hyprland-0.54.3.drv)",
+      "Bash(nix-store -r /nix/store/dwsslj1y4swm97lf7frjk405dc81cc3g-source)"
     ]
   }
 }

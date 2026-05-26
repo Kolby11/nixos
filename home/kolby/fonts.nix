@@ -9,6 +9,7 @@ in
     nerd-fonts.jetbrains-mono
     nerd-fonts.ubuntu-mono
     customPkgs.material-symbols
+    material-icons
   ];
 
   home.pointerCursor = {
