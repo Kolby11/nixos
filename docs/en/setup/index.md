@@ -13,7 +13,7 @@ The script:
 2. Prompts you to select one, or choose **"Create new configuration"**
 3. Writes the selected device name to `.setup` (this file is gitignored)
 
-`.setup` contains a single line: `DEVICE=<name>`. The `./rebuild` script reads it to know which flake output to build.
+`.setup` contains a single line: `DEVICE=<name>`. The `./setup` and `./install` scripts write it, and `./rebuild` reads it to know which flake output to build.
 
 ## Rebuilding
 
@@ -30,6 +30,14 @@ sudo nixos-rebuild switch --flake .#<DEVICE>
 ```
 
 where `<DEVICE>` is read from `.setup`.
+
+To switch the stored default explicitly:
+
+```bash
+./rebuild <DEVICE>
+```
+
+This validates the device name, writes it to `.setup`, and rebuilds that target.
 
 ## Adding a new machine
 

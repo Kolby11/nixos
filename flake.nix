@@ -21,7 +21,9 @@
     };
     claude-code.url = "github:sadjow/claude-code-nix";
     codex-cli-nix.url = "github:sadjow/codex-cli-nix";
-    yazi.url = "github:sxyazi/yazi";
+    # NOTE: do not make nixpkgs follow ours — upstream references top-level
+    # `libX11` which only resolves against its own pinned nixpkgs.
+    codex-desktop-linux.url = "github:ilysenko/codex-desktop-linux";
     eza.url = "github:eza-community/eza";
     quickshell = {
       url = "git+https://git.outfoxxed.me/outfoxxed/quickshell";
@@ -67,11 +69,6 @@
           ({ pkgs, ... }: {
             nixpkgs.config.allowUnfree = true;
             nixpkgs.overlays = [ inputs.claude-code.overlays.default ];
-            home.packages = [
-              (inputs.yazi.packages.${pkgs.stdenv.hostPlatform.system}.default.override {
-                _7zz = pkgs._7zz-rar;
-              })
-            ];
           })
         ];
         extraSpecialArgs = {

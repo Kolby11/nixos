@@ -1,5 +1,8 @@
 { pkgs, pkgs-unstable, inputs, lib, ... }:
 
+let
+  customPkgs = import ../../pkgs { inherit pkgs; };
+in
 {
   home.packages = with pkgs-unstable; [
     # Essentials
@@ -27,10 +30,12 @@
     pkgsCross.mingwW64.stdenv.cc 
     pkgsCross.mingwW64.windows.pthreads
     dotnet-sdk_9
+    cloc
 
     # AI
-    claude-code
+    customPkgs.claude-code
     inputs.codex-cli-nix.packages.${pkgs.stdenv.hostPlatform.system}.default
+    inputs.codex-desktop-linux.packages.${pkgs.stdenv.hostPlatform.system}.default
 
     # Browser
     firefox

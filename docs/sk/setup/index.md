@@ -13,7 +13,7 @@ Skript:
 2. Vyzve ťa na výber existujúcej alebo vytvorenie novej
 3. Zapíše zvolené meno zariadenia do `.setup` (ignorovaného gitom)
 
-`.setup` obsahuje jeden riadok: `DEVICE=<meno>`. Skript `./rebuild` ho číta, aby vedel, ktorý flake výstup budovať.
+`.setup` obsahuje jeden riadok: `DEVICE=<meno>`. Skripty `./setup` a `./install` ho zapisujú a `./rebuild` ho číta, aby vedel, ktorý flake výstup budovať.
 
 ## Prebudovanie systému
 
@@ -30,6 +30,14 @@ sudo nixos-rebuild switch --flake .#<ZARIADENIE>
 ```
 
 kde `<ZARIADENIE>` je načítané zo `.setup`.
+
+Na explicitnú zmenu uloženého predvoleného zariadenia:
+
+```bash
+./rebuild <ZARIADENIE>
+```
+
+Tým sa overí názov zariadenia, zapíše sa do `.setup` a prebuduje sa daný cieľ.
 
 ## Pridanie nového stroja
 

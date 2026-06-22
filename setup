@@ -80,7 +80,7 @@ NIXEOF
   ' "$DIR/flake.nix" > "$DIR/flake.nix.tmp" && mv "$DIR/flake.nix.tmp" "$DIR/flake.nix"
   echo "Updated: $DIR/flake.nix"
   echo
-  echo "Configuration '$device' created. Edit $config_dir/ to set it up, then re-run setup.sh."
+  echo "Configuration '$device' created. Edit $config_dir/ to set it up, then re-run ./setup."
   exit 0
 fi
 

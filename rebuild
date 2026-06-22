@@ -4,16 +4,39 @@ set -euo pipefail
 
 DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 SETUP="$DIR/.setup"
+CONFIGS_DIR="$DIR/system/configurations"
 
-if [[ ! -f "$SETUP" ]]; then
-  echo "Error: no .setup found — run ./setup.sh first." >&2
-  exit 1
+if [[ $# -gt 1 ]]; then
+  echo "Usage: ./rebuild [device]" >&2
+  exit 2
 fi
 
-source "$SETUP"
+if [[ $# -eq 1 ]]; then
+  DEVICE="$1"
+  if [[ ! -d "$CONFIGS_DIR/$DEVICE" ]]; then
+    echo "Error: unknown device '$DEVICE'." >&2
+    echo "Available devices:" >&2
+    find "$CONFIGS_DIR" -mindepth 1 -maxdepth 1 -type d -printf '  %f\n' | sort >&2
+    exit 1
+  fi
+  printf 'DEVICE=%s\n' "$DEVICE" > "$SETUP"
+else
+  if [[ ! -f "$SETUP" ]]; then
+    echo "Error: no .setup found — run ./setup first or pass a device: ./rebuild <device>." >&2
+    exit 1
+  fi
+
+  source "$SETUP"
+fi
 
 if [[ -z "${DEVICE:-}" ]]; then
   echo "Error: DEVICE not set in .setup." >&2
+  exit 1
+fi
+
+if [[ ! -d "$CONFIGS_DIR/$DEVICE" ]]; then
+  echo "Error: stored device '$DEVICE' does not exist in system/configurations." >&2
+  echo "Run ./setup to choose a valid device." >&2
   exit 1
 fi
 

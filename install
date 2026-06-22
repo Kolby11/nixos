@@ -4,6 +4,7 @@ set -euo pipefail
 
 DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 CONFIGS_DIR="$DIR/system/configurations"
+SETUP="$DIR/.setup"
 
 prompt_menu() {
   local prompt="$1"; shift
@@ -28,6 +29,7 @@ mapfile -t configs < <(find "$CONFIGS_DIR" -mindepth 1 -maxdepth 1 -type d -prin
 
 prompt_menu "Select configuration to install:" "${configs[@]}"
 DEVICE="$REPLY"
+printf 'DEVICE=%s\n' "$DEVICE" > "$SETUP"
 
 echo "Installing NixOS ($DEVICE)..."
 nixos-install --flake "$DIR#$DEVICE" --no-root-passwd

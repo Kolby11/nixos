@@ -1,4 +1,4 @@
-{ pkgs, inputs, lib, ... }:
+{ pkgs, pkgs-unstable, inputs, lib, ... }:
 
 let
   # The illogical-flake Home Manager module wraps Quickshell with Home Manager's
@@ -19,8 +19,8 @@ in
     home-manager.enable = true;
     yazi = {
       enable = true;
-      package = inputs.yazi.packages.${pkgs.stdenv.hostPlatform.system}.default.override {
-        _7zz = pkgs._7zz-rar;
+      package = pkgs-unstable.yazi.override {
+        _7zz = pkgs-unstable._7zz-rar;
       };
     };
     illogical-impulse = {
@@ -28,13 +28,14 @@ in
       dotfiles = {
         fish.enable = false;
         kitty.enable = false;
-        starship.enable = false;
+        starship.enable = true;
       };
     };
   };
 
   home.packages = [
     (lib.hiPrio quickshellSystemShimWithAliases)
+    pkgs.opencode
   ];
 
   home.file = {
@@ -43,4 +44,23 @@ in
     ".local/state/quickshell/.venv/bin/python".force = true;
     ".local/state/quickshell/.venv/bin/python3".force = true;
   };
+
+  home.activation.stowDotfiles = lib.hm.dag.entryAfter [ "copyIllogicalImpulseConfigs" ] ''
+    dotfilesDir="$HOME/.config/dotfiles"
+    if [ -d "$dotfilesDir" ]; then
+      cd "$dotfilesDir"
+      # Remove regular files (not symlinks) that stow would create, so stow can take ownership
+      for pkg in */; do
+        while IFS= read -r -d "" f; do
+          relative="''${f#$pkg}"
+          target="$HOME/$relative"
+          if [ -f "$target" ] && [ ! -L "$target" ]; then
+            $DRY_RUN_CMD rm -f "$target"
+          fi
+        done < <(find "$pkg" -not -type d -print0)
+      done
+      $DRY_RUN_CMD ${pkgs.stow}/bin/stow -vt ~ --restow */
+      cd "$HOME"
+    fi
+  '';
 }

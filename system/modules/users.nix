@@ -4,10 +4,11 @@
   users.users = {
     kolby = {
       isNormalUser = true;
-      extraGroups = [ 
-      "wheel" 
+      extraGroups = [
+      "wheel"
       "networkmanager"
-      ]; 
+      "docker"
+      ];
     };
     mato = {
       isNormalUser = true;
