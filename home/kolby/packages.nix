@@ -23,7 +23,7 @@ in
     go
     lua
     nodejs_24
-    pnpm
+    pkgs.pnpm_9
     (lib.hiPrio python3)
     (lib.lowPrio kdePackages.breeze-icons)
     rustup
@@ -33,7 +33,7 @@ in
     cloc
 
     # AI
-    customPkgs.claude-code
+    pkgs.claude-code
     inputs.codex-cli-nix.packages.${pkgs.stdenv.hostPlatform.system}.default
     inputs.codex-desktop-linux.packages.${pkgs.stdenv.hostPlatform.system}.default
 
@@ -86,5 +86,8 @@ in
     # Game development
     unityhub
     godot-mono
+
+    # Video Editing
+    #davinci-resolve
   ];
 }
