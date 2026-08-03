@@ -7,6 +7,7 @@
     ./programs.nix
     ./environment.nix
     ./fonts.nix
+    ./hypr-local.nix
   ];
 
   nixpkgs = {

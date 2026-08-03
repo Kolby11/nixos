@@ -11,6 +11,8 @@ in
     tmatrix
     (lib.lowPrio cliphist)
     (lib.lowPrio wl-clipboard)
+    pkgs.gh
+    pkgs.jq
 
     # Editor
     vscode-fhs
@@ -39,6 +41,7 @@ in
 
     # Browser
     firefox
+    inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
 
     # Communication
     teams-for-linux

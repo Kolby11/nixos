@@ -104,7 +104,11 @@
       "Bash(tar -xzf claude-code-2.1.170.tgz package/cli-wrapper.cjs -O)",
       "Bash(/nix/store/ky50nkm82jlfr4ihvzvmy3qllpf4wnv4-source/package/claude --version)",
       "Bash(/nix/store/h1ydrcqs5pdb4inx0z075mm1qgmj524i-claude-code-2.1.170/bin/.claude-wrapped --version)",
-      "Bash(/nix/store/h1ydrcqs5pdb4inx0z075mm1qgmj524i-claude-code-2.1.170/bin/.claude-wrapped --help)"
+      "Bash(/nix/store/h1ydrcqs5pdb4inx0z075mm1qgmj524i-claude-code-2.1.170/bin/.claude-wrapped --help)",
+      "Bash(grep -rniE 'return|terminal|kitty|foot|\\\\$term' /home/kolby/.config/hypr/hyprland/keybinds.conf /home/kolby/.config/hypr/custom/keybinds.conf)",
+      "Bash(grep -rniE '\\\\$term|terminal|kitty|foot|alacritty' /home/kolby/.config/hypr/hyprland.conf)",
+      "Bash(grep -rniE '^\\\\s*\\\\$term|term\\\\s*=|terminal\\\\s*=' /home/kolby/.config/hypr/)",
+      "Bash(nix log *)"
     ]
   }
 }

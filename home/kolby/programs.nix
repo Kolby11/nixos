@@ -45,22 +45,4 @@ in
     ".local/state/quickshell/.venv/bin/python3".force = true;
   };
 
-  home.activation.stowDotfiles = lib.hm.dag.entryAfter [ "copyIllogicalImpulseConfigs" ] ''
-    dotfilesDir="$HOME/.config/dotfiles"
-    if [ -d "$dotfilesDir" ]; then
-      cd "$dotfilesDir"
-      # Remove regular files (not symlinks) that stow would create, so stow can take ownership
-      for pkg in */; do
-        while IFS= read -r -d "" f; do
-          relative="''${f#$pkg}"
-          target="$HOME/$relative"
-          if [ -f "$target" ] && [ ! -L "$target" ]; then
-            $DRY_RUN_CMD rm -f "$target"
-          fi
-        done < <(find "$pkg" -not -type d -print0)
-      done
-      $DRY_RUN_CMD ${pkgs.stow}/bin/stow -vt ~ --restow */
-      cd "$HOME"
-    fi
-  '';
 }

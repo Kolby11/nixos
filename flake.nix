@@ -33,6 +33,10 @@
       url = "github:soymou/illogical-flake";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
+    zen-browser = {
+      url = "github:youwen5/zen-browser-flake";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
   };
   outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, elegant-grub2-themes, ... }@inputs:
@@ -43,6 +47,7 @@
     pkgs-unstable = import nixpkgs-unstable {
       inherit system;
       config.allowUnfree = true;
+      config.permittedInsecurePackages = [ "pnpm-10.29.2" ];
     };
     mkSystem = device: lib.nixosSystem {
       inherit system;

@@ -5,5 +5,8 @@
     DOTNET_ROOT = "${pkgs.dotnet-sdk}";
   };
 
-  home.sessionPath = [ "$HOME/.cargo/bin" ];
+  home.sessionPath = [
+    "$HOME/.local/bin"
+    "$HOME/.cargo/bin"
+  ];
 }
