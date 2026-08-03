@@ -87,12 +87,70 @@ let
       inactiveForeground=55,85,98
     '';
   };
+
+  frutigerAeroGlobalTheme = pkgs.symlinkJoin {
+    name = "frutiger-aero-global-theme";
+    paths = [
+      (pkgs.writeTextDir "share/plasma/look-and-feel/org.kolby.frutiger-aero/metadata.json" (builtins.toJSON {
+        KPlugin = {
+          Authors = [
+            {
+              Email = "";
+              Name = "Kolby";
+            }
+          ];
+          Category = "";
+          Description = "A bright Frutiger Aero profile for Plasma";
+          Id = "org.kolby.frutiger-aero";
+          License = "GPL-3.0-or-later";
+          Name = "Frutiger Aero";
+          Version = "1.0";
+        };
+        X-Plasma-APIVersion = "2";
+      }))
+      (pkgs.writeTextDir "share/plasma/look-and-feel/org.kolby.frutiger-aero/contents/defaults" ''
+        [kdeglobals][General]
+        ColorScheme=FrutigerAero
+
+        [kdeglobals][Icons]
+        Theme=Papirus
+
+        [kdeglobals][KDE]
+        AnimationDurationFactor=0.75
+        SingleClick=false
+        widgetStyle=Breeze
+
+        [kcminputrc][Mouse]
+        cursorSize=24
+        cursorTheme=Breeze_Light
+
+        [kwinrc][Compositing]
+        Enabled=true
+        LatencyPolicy=Low
+
+        [kwinrc][Desktops]
+        Number=4
+        Rows=1
+
+        [kwinrc][Plugins]
+        blurEnabled=true
+        contrastEnabled=true
+        translucencyEnabled=true
+
+        [kwinrc][Windows]
+        ElectricBorders=1
+
+        [plasmarc][Theme]
+        name=breeze-light
+      '')
+    ];
+  };
 in
 {
   desktopProfiles.kde.profiles.frutiger-aero = {
-    displayName = "Plasma (Frutiger Aero)";
     packages = with pkgs; [
       frutigerAeroColors
+      frutigerAeroGlobalTheme
       papirus-icon-theme
       plasma-panel-colorizer
     ];

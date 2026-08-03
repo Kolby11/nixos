@@ -4,34 +4,26 @@ let
   cfg = config.desktopProfiles.kde;
   enabledProfiles = lib.filterAttrs (_: profile: profile.enable) cfg.profiles;
 
-  mkLauncher = profileName: profile:
-    pkgs.writeShellScriptBin "start-plasma-${profileName}" ''
-      export DESKTOP_PROFILE="kde/${profileName}"
-      export XDG_CONFIG_HOME="$HOME/${profile.configHome}"
-      export XDG_CACHE_HOME="$HOME/.cache/desktop-profiles/kde/${profileName}"
-
-      mkdir -p "$XDG_CONFIG_HOME" "$XDG_CACHE_HOME"
-      exec ${pkgs.kdePackages.plasma-workspace}/bin/startplasma-wayland
-    '';
-
-  launchers = lib.mapAttrs mkLauncher enabledProfiles;
-  sessionNames = map (name: "plasma-${name}") (lib.attrNames enabledProfiles);
-
-  profileSessions = pkgs.runCommand "plasma-profile-sessions" {
-    passthru.providedSessions = sessionNames;
+  # Plasma Workspace ships both Wayland and legacy X11 session files. Keep the
+  # Wayland session so SDDM presents one KDE choice alongside the other desktops.
+  visibleSessions = pkgs.runCommand "desktop-sessions" {
+    preferLocalBuild = true;
+    allowSubstitutes = false;
   } ''
-    mkdir -p "$out/share/wayland-sessions"
-    ${lib.concatStringsSep "\n" (lib.mapAttrsToList (profileName: profile: ''
-      cat > "$out/share/wayland-sessions/plasma-${profileName}.desktop" <<EOF
-      [Desktop Entry]
-      Type=Application
-      Name=${profile.displayName}
-      Comment=Plasma desktop using the kde/${profileName} configuration profile
-      Exec=${launchers.${profileName}}/bin/start-plasma-${profileName}
-      TryExec=${launchers.${profileName}}/bin/start-plasma-${profileName}
-      DesktopNames=KDE
-      EOF
-    '') enabledProfiles)}
+    mkdir -p "$out/share/wayland-sessions" "$out/share/xsessions"
+
+    ${lib.concatMapStrings (package: ''
+      if test -d ${package}/share/wayland-sessions; then
+        ${pkgs.buildPackages.xorg.lndir}/bin/lndir \
+          ${package}/share/wayland-sessions "$out/share/wayland-sessions"
+      fi
+      if test -d ${package}/share/xsessions; then
+        ${pkgs.buildPackages.xorg.lndir}/bin/lndir \
+          ${package}/share/xsessions "$out/share/xsessions"
+      fi
+    '') config.services.displayManager.sessionPackages}
+
+    rm -f "$out/share/xsessions/plasmax11.desktop"
   '';
 in
 {
@@ -41,27 +33,18 @@ in
   ];
 
   options.desktopProfiles.kde = {
-    enable = lib.mkEnableOption "KDE Plasma with isolated login profiles";
+    enable = lib.mkEnableOption "KDE Plasma with profiles available as Global Themes";
 
     profiles = lib.mkOption {
       default = { };
       description = ''
-        Plasma configurations exposed as separate display-manager sessions.
-        Each profile may be extended from its own NixOS module.
+        Plasma profiles installed inside KDE. These must not create additional
+        display-manager sessions; visual profiles belong in Global Themes.
       '';
       type = lib.types.attrsOf (lib.types.submodule ({ name, ... }: {
         options = {
           enable = lib.mkEnableOption "the ${name} Plasma profile" // {
             default = true;
-          };
-          displayName = lib.mkOption {
-            type = lib.types.str;
-            default = "Plasma (${name})";
-          };
-          configHome = lib.mkOption {
-            type = lib.types.str;
-            default = ".config/desktop-profiles/kde/${name}";
-            readOnly = true;
           };
           packages = lib.mkOption {
             type = lib.types.listOf lib.types.package;
@@ -77,7 +60,10 @@ in
     { desktopProfiles.kde.enable = true; }
     (lib.mkIf cfg.enable {
       services.desktopManager.plasma6.enable = true;
-      services.displayManager.sessionPackages = [ profileSessions ];
+      services.displayManager.sddm.settings = {
+        Wayland.SessionDir = lib.mkForce "${visibleSessions}/share/wayland-sessions";
+        X11.SessionDir = lib.mkForce "${visibleSessions}/share/xsessions";
+      };
       environment.systemPackages = lib.concatMap (profile: profile.packages) (lib.attrValues enabledProfiles);
     })
   ];

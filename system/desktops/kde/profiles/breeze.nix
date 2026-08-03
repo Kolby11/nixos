@@ -1,7 +1,6 @@
 { ... }:
 
 {
-  desktopProfiles.kde.profiles.breeze = {
-    displayName = "Plasma (Breeze profile)";
-  };
+  # Breeze is included with Plasma and appears in System Settings > Global Theme.
+  desktopProfiles.kde.profiles.breeze = { };
 }
