@@ -8,6 +8,11 @@
       url = "github:nix-community/home-manager/release-25.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    plasma-manager = {
+      url = "github:nix-community/plasma-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.home-manager.follows = "home-manager";
+    };
     elegant-grub2-themes = {
       url = "github:kolby11/elegant-grub2-themes";
     };
@@ -71,6 +76,7 @@
         inherit pkgs;
         modules = [
           ./home/kolby
+          inputs.plasma-manager.homeModules.plasma-manager
           ({ pkgs, ... }: {
             nixpkgs.config.allowUnfree = true;
             nixpkgs.overlays = [ inputs.claude-code.overlays.default ];

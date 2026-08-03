@@ -8,6 +8,7 @@
     ./environment.nix
     ./fonts.nix
     ./hypr-local.nix
+    ./desktop-profiles
   ];
 
   nixpkgs = {

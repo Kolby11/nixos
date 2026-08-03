@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, lib, pkgs, ... }:
 
 {
   services = {
@@ -25,7 +25,7 @@
         enable = true;
         wayland.enable = true;
         theme = "greenleaf";
-        package = pkgs.kdePackages.sddm;
+        package = lib.mkForce pkgs.kdePackages.sddm;
       };
       defaultSession = "hyprland-uwsm";
     };

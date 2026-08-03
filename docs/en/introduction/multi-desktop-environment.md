@@ -8,7 +8,7 @@ The configuration supports multiple desktop environments from a single NixOS ins
 
 <<< @/../system/desktops/default.nix
 
-Currently **Hyprland** is the active desktop. Uncomment `./i3` or `./gnome` to enable additional environments alongside it.
+Hyprland, Niri, and KDE Plasma are enabled together. SDDM lets the same user choose a desktop at login.
 
 ## Per-desktop system config
 
@@ -22,7 +22,18 @@ The base system modules (networking, sound, boot, etc.) are shared — desktops 
 
 ## Per-desktop home config
 
-User-level configuration (dotfiles, theming, per-app settings) is managed in Home Manager. The intent is that each desktop environment has its own Home Manager module so that, for example, a Hyprland user's Waybar config does not coexist with an i3 user's Polybar config.
+User-level configuration is managed in Home Manager. The existing `~/.config` remains the Hyprland configuration root. KDE login profiles use isolated roots under `~/.config/desktop-profiles/kde/`, preventing Plasma settings and modules from overwriting the Hyprland setup.
+
+Each enabled KDE profile appears as a separate SDDM session. `Plasma (Breeze profile)` and `Plasma (Frutiger Aero)` therefore share the `kolby` account and user data, but keep independent Plasma layouts and settings.
+
+To add a KDE variant, add matching modules in:
+
+- `system/desktops/kde/profiles/<profile>.nix` for the SDDM entry and profile-specific packages or Plasma modules.
+- `home/kolby/desktop-profiles/kde/profiles/<profile>.nix` for that profile's dotfiles.
+
+The system profile module declares `desktopProfiles.kde.profiles.<profile>`. Its generated launcher sets `DESKTOP_PROFILE`, `XDG_CONFIG_HOME`, and an isolated `XDG_CACHE_HOME` before Plasma starts. Other XDG data remains shared, so applications, downloads, and user data are available in every desktop.
+
+Home Manager keeps the declarative defaults in `~/.local/share/desktop-profile-templates/kde/` and seeds files that do not exist in a profile. The resulting files under `~/.config/desktop-profiles/kde/` are writable, so changes made in KDE System Settings remain local to that profile. Delete one profile directory and run Home Manager again to reset it to its declared defaults.
 
 ## Available desktop environments
 
@@ -31,4 +42,4 @@ User-level configuration (dotfiles, theming, per-app settings) is managed in Hom
 | Hyprland | **Active** | Wayland compositor with QuickShell (ii-shell) |
 | i3 | Inactive | X11 tiling window manager with Polybar |
 | GNOME | Inactive | Full desktop environment |
-| KDE | Planned | Not yet configured |
+| KDE | **Active** | Plasma 6 with isolated Breeze and Frutiger Aero profiles |
