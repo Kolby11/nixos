@@ -28,7 +28,7 @@ in
       dotfiles = {
         fish.enable = false;
         kitty.enable = false;
-        starship.enable = true;
+        starship.enable = false;
       };
     };
   };
@@ -37,6 +37,20 @@ in
     (lib.hiPrio quickshellSystemShimWithAliases)
     pkgs.opencode
   ];
+
+  systemd.user.services.hyprmoncfgd = {
+    Unit = {
+      Description = "Hyprland monitor profile daemon";
+      After = "graphical-session.target";
+    };
+    Service = {
+      ExecStart = "${pkgs-unstable.hyprmoncfg}/bin/hyprmoncfgd";
+      Restart = "on-failure";
+    };
+    Install = {
+      WantedBy = [ "graphical-session.target" ];
+    };
+  };
 
   home.file = {
     ".local/state/quickshell/.venv/pyvenv.cfg".force = true;

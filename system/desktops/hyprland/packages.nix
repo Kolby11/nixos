@@ -18,7 +18,6 @@
 
     # Terminal
     kitty
-    oh-my-posh
 
     lm_sensors
 

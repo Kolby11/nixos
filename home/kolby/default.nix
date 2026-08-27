@@ -23,4 +23,5 @@
     homeDirectory = "/home/kolby";
     stateVersion = "25.05";
   };
+
 }

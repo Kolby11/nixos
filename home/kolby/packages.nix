@@ -7,6 +7,10 @@ in
   home.packages = with pkgs-unstable; [
     # Essentials
     fzf
+    lazygit
+    gitui
+    tmux
+    oh-my-posh
     (lib.lowPrio matugen)
     tmatrix
     (lib.lowPrio cliphist)
@@ -50,15 +54,22 @@ in
     # Bluetooth
     blueman
 
+    # Hyprland monitor layout editor and automatic profile switcher
+    pkgs-unstable.hyprmoncfg
+
     # Gaming
     steam
     steam-run
+    heroic # Epic Games Store / GOG / Amazon launcher
     (pkgs.lutris.override {
       extraPkgs = pkgs: [
         wineWow64Packages.stable
         winetricks
       ];
     })
+
+    # Office
+    libreoffice-fresh
 
     # Drawing
     krita
@@ -67,7 +78,10 @@ in
     blender
 
     # Music
-    spotify
+    # The mutable Spicetify launcher in ~/.config/dotfiles patches this copy
+    # at runtime; do not replace it with the immutable spicetify-nix package.
+    (lib.lowPrio pkgs-unstable.spotify)
+    pkgs-unstable.spicetify-cli
     inputs.kew.packages.${pkgs.stdenv.hostPlatform.system}.default
 
     # ii shell Python dependencies

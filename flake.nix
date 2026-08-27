@@ -24,6 +24,10 @@
       url = "github:Gerg-L/spicetify-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    large-scale-album-art = {
+      url = "github:lelaksi/Large-scale-album-art";
+      flake = false;
+    };
     claude-code.url = "github:sadjow/claude-code-nix";
     codex-cli-nix.url = "github:sadjow/codex-cli-nix";
     # NOTE: do not make nixpkgs follow ours — upstream references top-level
