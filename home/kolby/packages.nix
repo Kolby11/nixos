@@ -2,6 +2,14 @@
 
 let
   customPkgs = import ../../pkgs { inherit pkgs; };
+  codexCli = inputs.codex-cli-nix.packages.${pkgs.stdenv.hostPlatform.system}.default.overrideAttrs (old: {
+    # codex-cli-nix disables its updater because Nix store paths are immutable.
+    # Keep the package Nix-managed; this only removes the opt-out flag so Codex
+    # can perform its own update check and report what it would do.
+    postInstall = (old.postInstall or "") + ''
+      sed -i '/DISABLE_AUTOUPDATER/d' "$out/bin/codex"
+    '';
+  });
 in
 {
   home.packages = with pkgs-unstable; [
@@ -40,7 +48,7 @@ in
 
     # AI
     pkgs.claude-code
-    inputs.codex-cli-nix.packages.${pkgs.stdenv.hostPlatform.system}.default
+    codexCli
     inputs.codex-desktop-linux.packages.${pkgs.stdenv.hostPlatform.system}.default
 
     # Browser
