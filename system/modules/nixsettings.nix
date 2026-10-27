@@ -1,4 +1,24 @@
-{ config, pkgs, ... }:
+{ config, lib, pkgs, ... }:
+
+let
+  pruneSystemGenerations = pkgs.writeShellScript "prune-system-generations" ''
+    set -euo pipefail
+    generations=$(${config.nix.package}/bin/nix-env --profile /nix/var/nix/profiles/system --list-generations)
+    current=$(printf '%s\n' "$generations" | ${pkgs.gawk}/bin/awk '/\(current\)/ { print $1 }')
+    if [[ ! "$current" =~ ^[0-9]+$ ]]; then
+      echo "Cannot identify the current system generation; refusing to prune." >&2
+      exit 1
+    fi
+    # Preserve the selected generation even after a rollback, plus the two newest others.
+    mapfile -t obsolete < <(printf '%s\n' "$generations" \
+      | ${pkgs.coreutils}/bin/sort -k1,1nr \
+      | ${pkgs.gawk}/bin/awk -v current="$current" '$1 != current && ++kept > 2 { print $1 }')
+    if (( ''${#obsolete[@]} > 0 )); then
+      ${config.nix.package}/bin/nix-env --profile /nix/var/nix/profiles/system \
+        --delete-generations "''${obsolete[@]}"
+    fi
+  '';
+in
 
 {
 	documentation.nixos.enable = false;
@@ -19,7 +39,14 @@
 		gc = {
 			automatic = true;
 			dates = "weekly";
-			options = "--delete-older-than 7d";
+			options = "";
+			persistent = true;
 		};
 	};
+
+  boot.loader.grub.configurationLimit = 3;
+  boot.loader.grub.extraInstallCommands = lib.mkBefore ''
+    ${pruneSystemGenerations}
+  '';
+  systemd.services.nix-gc.preStart = "${pruneSystemGenerations}";
 }

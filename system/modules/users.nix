@@ -7,7 +7,6 @@
       extraGroups = [
       "wheel"
       "networkmanager"
-      "docker"
       ];
     };
     mato = {

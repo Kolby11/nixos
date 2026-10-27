@@ -2,6 +2,10 @@
 
 {
   environment.systemPackages = with pkgs-unstable; [
+    # Install only; load manually when testing.
+    (pkgs-unstable.callPackage ../../../pkgs/hyprglass {
+      hyprland = config.programs.hyprland.package;
+    })
     waybar
     wlogout
     wl-clipboard

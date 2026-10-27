@@ -26,6 +26,9 @@ in
     pkgs.gh
     pkgs.jq
 
+    # Password manager
+    bitwarden-desktop
+
     # Editor
     vscode-fhs
 
@@ -49,6 +52,7 @@ in
     # AI
     pkgs.claude-code
     codexCli
+    antigravity-cli
     inputs.codex-desktop-linux.packages.${pkgs.stdenv.hostPlatform.system}.default
 
     # Browser
@@ -77,7 +81,8 @@ in
     })
 
     # Office
-    libreoffice-fresh
+    libreoffice
+    obsidian
 
     # Drawing
     krita
