@@ -1,0 +1,130 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+repo_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+settings_file="$repo_dir/home/kolby/roblox-tools.json"
+profile_bin="$HOME/.nix-profile/bin"
+settings=$(<"$settings_file")
+
+keys=(studio player rojo luauLsp stylua selene wally studioMcp)
+labels=(
+  "Roblox Studio (Vinegar)"
+  "Roblox Player (Sober)"
+  "Rojo CLI (project sync)"
+  "Luau language server"
+  "StyLua (formatter)"
+  "Selene (linter)"
+  "Wally (Roblox package manager)"
+  "Studio MCP for Codex (requires Studio)"
+)
+
+selected() {
+  jq -e --arg key "$1" '.[$key] == true' <<<"$settings" >/dev/null
+}
+
+validate_selection() {
+  if selected studioMcp && ! selected studio; then
+    echo 'Enable Studio or uncheck Studio MCP.' >&2
+    return 1
+  fi
+}
+
+save_selection() {
+  local temporary
+  temporary=$(mktemp "$settings_file.XXXXXX")
+  if ! { printf '%s\n' "$settings" >"$temporary" &&
+    chmod --reference="$settings_file" "$temporary" &&
+    mv -f -- "$temporary" "$settings_file"; }; then
+    rm -f -- "$temporary"
+    return 1
+  fi
+}
+
+apply_selection() {
+  local old_flatpak='' sober='org.vinegarhq.Sober'
+  local server='Roblox_Studio' launcher="$profile_bin/roblox-studio-mcp"
+  local existing_command
+
+  if command -v flatpak >/dev/null; then
+    old_flatpak=$(readlink -f "$(command -v flatpak)")
+  fi
+  if ! selected player && [[ -n "$old_flatpak" ]] &&
+    "$old_flatpak" info --user "$sober" >/dev/null 2>&1; then
+    "$old_flatpak" uninstall --user --noninteractive "$sober"
+  fi
+
+  home-manager switch --flake "$repo_dir#kolby" --no-write-lock-file
+
+  existing_command=$("$profile_bin/codex" mcp get "$server" --json 2>/dev/null |
+    jq -r '.transport.command // empty' || true)
+  if selected studioMcp; then
+    if [[ -z "$existing_command" ]]; then
+      "$profile_bin/codex" mcp add "$server" -- "$launcher"
+    elif [[ "$existing_command" != "$launcher" ]]; then
+      echo "Codex already has a $server server configured." >&2
+    fi
+  elif [[ "$existing_command" == "$launcher" ]]; then
+    "$profile_bin/codex" mcp remove "$server"
+  fi
+
+  if selected player; then
+    "$profile_bin/flatpak" remote-add --user --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+    if ! "$profile_bin/flatpak" info --user "$sober" >/dev/null 2>&1; then
+      "$profile_bin/flatpak" install --user --noninteractive flathub "$sober"
+    fi
+  fi
+}
+
+case "${1:-}" in
+  --apply)
+    validate_selection
+    apply_selection
+    exit
+    ;;
+  -h|--help)
+    echo "Usage: $0 [--apply]"
+    echo 'Open the Roblox component menu, or apply the saved selection with --apply.'
+    exit
+    ;;
+  '')
+    ;;
+  *)
+    echo "Usage: $0 [--apply]" >&2
+    exit 2
+    ;;
+esac
+
+if [[ ! -t 0 || ! -t 1 ]]; then
+  echo 'Open this menu in a terminal or run it with --apply.' >&2
+  exit 2
+fi
+
+while true; do
+  printf '\nRoblox setup\n\n'
+  for index in "${!keys[@]}"; do
+    mark=' '
+    if selected "${keys[$index]}"; then
+      mark='x'
+    fi
+    printf '  %d. [%s] %s\n' "$((index + 1))" "$mark" "${labels[$index]}"
+  done
+  printf '\nPress 1–8 to toggle, Enter to save and apply, or q to quit. '
+  IFS= read -r -s -n 1 key || exit
+  printf '\n'
+  case "$key" in
+    [1-8])
+      settings=$(jq --arg key "${keys[$((key - 1))]}" '.[$key] |= not' <<<"$settings")
+      ;;
+    '')
+      if validate_selection; then
+        save_selection
+        apply_selection
+        exit
+      fi
+      ;;
+    q|Q)
+      exit
+      ;;
+  esac
+done

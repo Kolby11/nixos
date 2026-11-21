@@ -57,7 +57,7 @@ in
   };
 
   config = lib.mkMerge [
-    { desktopProfiles.kde.enable = true; }
+    { desktopProfiles.kde.enable = config.local.features.plasmaDesktop; }
     (lib.mkIf cfg.enable {
       services.desktopManager.plasma6.enable = true;
       services.displayManager.sddm.settings = {

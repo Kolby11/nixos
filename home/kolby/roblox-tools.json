@@ -1,0 +1,10 @@
+{
+  "studio": true,
+  "player": true,
+  "rojo": true,
+  "luauLsp": true,
+  "stylua": true,
+  "selene": true,
+  "wally": true,
+  "studioMcp": true
+}
