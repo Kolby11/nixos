@@ -13,6 +13,13 @@ hyprlandPlugins.mkHyprlandPlugin {
     hash = "sha256-SOdn2s/oxf5v2VYHVmQvfvRIyyV9kFNvEBpQXkLCb+s=";
   };
 
+  # Contour layers rebuild their glass outline at most every 33 ms, so the
+  # glass trails a MESH card that resizes or animates at display rate.
+  postPatch = ''
+    substituteInPlace src/Contour.hpp \
+      --replace-fail "MIN_REBUILD_INTERVAL{33}" "MIN_REBUILD_INTERVAL{8}"
+  '';
+
   nativeBuildInputs = [ wayland-scanner ];
   enableParallelBuilding = true;
   makeFlags = [ "HYPRGLASS_VERSION=7fc3280" ];
